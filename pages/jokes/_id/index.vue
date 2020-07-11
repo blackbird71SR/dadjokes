@@ -2,7 +2,7 @@
   <div>
     <nuxt-link to="/jokes">Back to Jokes</nuxt-link>
     <h2>
-      <Joke :joke="joke.joke" />
+      <Joke :joke="joke.joke" :id="joke.id" />
     </h2>
     <small>Joke ID: {{$route.params.id}}</small>
   </div>
