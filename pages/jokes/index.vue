@@ -1,21 +1,46 @@
 <template>
   <div>
     <h1>Jokes</h1>
+    <Joke v-for="joke in jokes" v-bind:key="joke.id" :id="joke.id" :joke="joke.joke" />
   </div>
 </template>
 
 <script>
+import axios from 'axios';
+import Joke from '../../components/Joke';
+
 export default {
-    head(){
-        return{
-            title:'Welcome to DadJokes!',
-            meta:[{
-                hid: 'description',
-                name: 'description',
-                content:'Best place for corny dad jokes'
-            }]
-        }
+  components:{
+    Joke
+  },
+  data(){
+    return{
+      jokes:[]
     }
+  },
+  async created(){
+    const config = {
+      headers:{
+        'Accept':'application/json'
+      }
+    }
+    try {
+      const res = await axios.get('https://icanhazdadjoke.com/search',config);
+      this.jokes = res.data.results;
+    } catch (err) {
+      console.log(err)
+    }
+  },
+  head(){
+      return{
+          title:'Jokes!',
+          meta:[{
+              hid: 'description',
+              name: 'description',
+              content:'Best place for corny dad jokes'
+          }]
+      }
+  }
 }
 </script>
 
